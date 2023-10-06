@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Interest Calculator - Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #004080;
+        }
+
+        .result-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .result-section h2 {
+            color: #007acc;
+            margin-bottom: 10px;
+        }
+
+        .result-section p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .result-section .icon {
+            font-size: 20px;
+            color: #007acc;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1><i class="fas fa-calculator"></i> Calculated Interest and Totals</h1>
+
+    <div class="result-section" style="background-color: #f9f9f9;">
+        <h2>Loan Details</h2>
+        <p><i class="fas fa-money-bill"></i> <strong>Principal amount:</strong> ${{ principal }}</p>
+        <p><i class="fas fa-percentage"></i> <strong>Annual interest rate:</strong> {{ interest_rate }}%</p>
+        <p><i class="fas fa-clock"></i> <strong>Loan period (years):</strong> {{ loan_period }}</p>
+    </div>
+    
+    <div class="result-section" style="background-color: #f0f9ff;">
+        <h2>Interest Breakdown</h2>
+        <p><i class="fas fa-chart-line"></i> <strong>Monthly Interest:</strong> ${{ monthly_interest }}</p>
+        <p><i class="fas fa-chart-bar"></i> <strong>Yearly Interest:</strong> ${{ yearly_interest }}</p>
+        <p><i class="fas fa-chart-pie"></i> <strong>Lifetime Interest:</strong> ${{ total_interest }}</p>
+    </div>
+
+    <div class="result-section" style="background-color: #eff8e0;">
+        <h2>Total Amount Repaid</h2>
+        <p><i class="fas fa-hand-holding-usd"></i> <strong>Total Amount Repaid:</strong> ${{ total_amount_repaid }}</p>
+    </div>
+</body>
+</html>
