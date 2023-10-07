@@ -36,6 +36,16 @@
             color: #007acc;
             margin-right: 10px;
         }
+
+        .chart-container {
+            width: 45%;
+            margin: 10px 2.5%;
+            float: left;
+        }
+
+        canvas {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -59,5 +69,73 @@
         <h2>Total Amount Repaid</h2>
         <p><i class="fas fa-hand-holding-usd"></i> <strong>Total Amount Repaid:</strong> ${{ total_amount_repaid }}</p>
     </div>
+    
+    <div class="chart-container">
+        <canvas id="line-chart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Line chart
+        var lineChart = new Chart(document.getElementById('line-chart'), {
+            type: 'line',
+            data: {
+                labels: generateMonthLabels({{ loan_period }}),
+                datasets: [
+                    {
+                        data: generateMonthlyInterestData({{ principal }}, {{ interest_rate }}, {{ loan_period }}),
+                        label: 'Monthly Interest',
+                        borderColor: '#007acc',
+                        fill: false
+                    },
+                    {
+                        data: generateRemainingPrincipalData({{ principal }}, {{ interest_rate }}, {{ loan_period }}),
+                        label: 'Remaining Principal',
+                        borderColor: '#f0f9ff',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Interest and Remaining Principal Over Time'
+                }
+            }
+        });
+
+        function generateMonthLabels(period) {
+            var labels = [];
+            for (var i = 1; i <= period * 12; i++) {
+                labels.push('Month ' + i);
+            }
+            return labels;
+        }
+
+        function generateMonthlyInterestData(principal, annualInterestRate, period) {
+            var monthlyInterestRate = annualInterestRate / 12 / 100;
+            var monthlyPayments = period * 12;
+
+            var data = [];
+            for (var i = 1; i <= monthlyPayments; i++) {
+                var interest = principal * monthlyInterestRate;
+                data.push(interest);
+            }
+            return data;
+        }
+
+        function generateRemainingPrincipalData(principal, annualInterestRate, period) {
+            var monthlyInterestRate = annualInterestRate / 12 / 100;
+            var monthlyPayments = period * 12;
+
+            var data = [];
+            var remainingPrincipal = principal;
+            for (var i = 1; i <= monthlyPayments; i++) {
+                remainingPrincipal -= principal / (period * 12); // Decrease by an equal amount each month
+                data.push(remainingPrincipal);
+            }
+            return data;
+        }
+    </script>
 </body>
 </html>
